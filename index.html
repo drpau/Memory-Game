@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dog Breed Match - Memory Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #FF6B6B;
+            --secondary: #4ECDC4;
+            --accent: #FFE66D;
+            --dark: #2C3E50;
+            --light: #F7F9FC;
+            --tile-back: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        h1 {
+            font-family: 'Fredoka One', cursive;
+            color: var(--dark);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 0 var(--accent);
+        }
+
+        /* Mode Selection Screen */
+        #mode-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .mode-btn {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.5rem;
+            padding: 20px 50px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .mode-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .mode-btn.single {
+            background: linear-gradient(135deg, var(--primary) 0%, #ee5a5a 100%);
+        }
+
+        .mode-btn.two-player {
+            background: linear-gradient(135deg, var(--secondary) 0%, #3dbdb5 100%);
+        }
+
+        /* Game Screen */
+        #game-screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .scoreboard {
+            display: flex;
+            gap: 40px;
+            background: white;
+            padding: 15px 40px;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .score-item {
+            text-align: center;
+        }
+
+        .score-label {
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 600;
+        }
+
+        .score-value {
+            font-family: 'Fredoka One', cursive;
+            font-size: 2rem;
+            color: var(--dark);
+        }
+
+        .score-item.active .score-value {
+            color: var(--primary);
+        }
+
+        .turn-indicator {
+            font-weight: 700;
+            color: var(--secondary);
+            font-size: 1.1rem;
+        }
+
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 12px;
+            max-width: 720px;
+            width: 100%;
+        }
+
+        .tile {
+            aspect-ratio: 1;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .tile-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s;
+            transform-style: preserve-3d;
+        }
+
+        .tile.flipped .tile-inner {
+            transform: rotateY(180deg);
+        }
+
+        .tile.matched {
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+
+        .tile-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        .tile-front {
+            background: var(--tile-back);
+            background-size: cover;
+        }
+
+        .tile-front::before {
+            content: '🐾';
+            font-size: 1.8rem;
+            opacity: 0.5;
+        }
+
+        .tile-back {
+            background: white;
+            transform: rotateY(180deg);
+            border: 3px solid var(--secondary);
+        }
+
+        .tile-back img {
+            width: 80%;
+            height: 80%;
+            object-fit: contain;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .btn {
+            font-family: 'Nunito', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+
+        .btn-restart {
+            background: var(--accent);
+            color: var(--dark);
+        }
+
+        .btn-menu {
+            background: var(--dark);
+            color: white;
+        }
+
+        /* Winner Modal */
+        #winner-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px 60px;
+            border-radius: 25px;
+            text-align: center;
+            animation: popIn 0.3s ease;
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-content h2 {
+            font-family: 'Fredoka One', cursive;
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .modal-content p {
+            font-size: 1.2rem;
+            color: var(--dark);
+            margin-bottom: 25px;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .game-board {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 8px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .tile-face {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>🐕 Dog Breed Match 🐕</h1>
+
+    <!-- Mode Selection -->
+    <div id="mode-screen">
+        <h2>Choose Your Mode</h2>
+        <button class="mode-btn single" onclick="startGame('single')">👤 Single Player</button>
+        <button class="mode-btn two-player" onclick="startGame('two')">👥 Two Players</button>
+    </div>
+
+    <!-- Game Screen -->
+    <div id="game-screen">
+        <div class="scoreboard">
+            <div class="score-item" id="p1-score-box">
+                <div class="score-label">Player 1</div>
+                <div class="score-value" id="p1-score">0</div>
+            </div>
+            <div class="score-item" id="p2-score-box">
+                <div class="score-label">Player 2</div>
+                <div class="score-value" id="p2-score">0</div>
+            </div>
+        </div>
+        <div class="turn-indicator" id="turn-indicator"></div>
+        
+        <div class="game-board" id="game-board"></div>
+        
+        <div class="controls">
+            <button class="btn btn-restart" onclick="restartGame()">🔄 Restart Game</button>
+            <button class="btn btn-menu" onclick="showModeScreen()">🏠 Main Menu</button>
+        </div>
+    </div>
+
+    <!-- Winner Modal -->
+    <div id="winner-modal">
+        <div class="modal-content">
+            <h2 id="winner-title">🎉 Game Over!</h2>
+            <p id="winner-message"></p>
+            <button class="mode-btn single" onclick="showModeScreen()">Play Again</button>
+        </div>
+    </div>
+
+    <script>
+        // Dog breed data with emoji caricatures
+        const dogBreeds = [
+            { name: 'Labrador', emoji: '🦮' },
+            { name: 'German Shepherd', emoji: '🐕‍🦺' },
+            { name: 'Golden Retriever', emoji: '🦃' },
+            { name: 'French Bulldog', emoji: '🐕' },
+            { name: 'Bulldog', emoji: '🐶' },
+            { name: 'Poodle', emoji: '🎀' },
+            { name: 'Beagle', emoji: '👃' },
+            { name: 'Rottweiler', emoji: '⚫' },
+            { name: 'Yorkshire Terrier', emoji: '🧶' },
+            { name: 'Boxer', emoji: '🥊' },
+            { name: 'Dachshund', emoji: '🌭' },
+            { name: 'Siberian Husky', emoji: '❄️' }
+        ];
+
+        let gameMode = 'single';
+        let scores = { p1: 0, p2: 0 };
+        let currentPlayer = 1;
+        let flippedTiles = [];
+        let matchedPairs = 0;
+        let isLocked = false;
+
+        function shuffle(array) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function startGame(mode) {
+            gameMode = mode;
+            document.getElementById('mode-screen').style.display = 'none';
+            document.getElementById('game-screen').style.display = 'flex';
+            document.getElementById('winner-modal').style.display = 'none';
+            
+            initGame();
+        }
+
+        function initGame() {
+            scores = { p1: 0, p2: 0 };
+            currentPlayer = 1;
+            flippedTiles = [];
+            matchedPairs = 0;
+            isLocked = false;
+
+            updateScoreboard();
+            createBoard();
+        }
+
+        function createBoard() {
+            const board = document.getElementById('game-board');
+            board.innerHTML = '';
+
+            // Create pairs
+            const tiles = [...dogBreeds, ...dogBreeds];
+            const shuffled = shuffle(tiles);
+
+            shuffled.forEach((breed, index) => {
+                const tile = document.createElement('div');
+                tile.className = 'tile';
+                tile.dataset.index = index;
+                tile.dataset.breed = breed.name;
+                tile.onclick = () => flipTile(tile);
+
+                tile.innerHTML = `
+                    <div class="tile-inner">
+                        <div class="tile-face tile-front"></div>
+                        <div class="tile-face tile-back">${breed.emoji}</div>
+                    </div>
+                `;
+
+                board.appendChild(tile);
+            });
+        }
+
+        function flipTile(tile) {
+            // Prevent clicking during animation or invalid clicks
+            if (isLocked) return;
+            if (tile.classList.contains('flipped')) return;
+            if (tile.classList.contains('matched')) return;
+            if (flippedTiles.length >= 2) return;
+            if (flippedTiles.includes(tile)) return;
+
+            tile.classList.add('flipped');
+            flippedTiles.push(tile);
+
+            if (flippedTiles.length === 2) {
+                checkMatch();
+            }
+        }
+
+        function checkMatch() {
+            isLocked = true;
+            const [tile1, tile2] = flippedTiles;
+            const isMatch = tile1.dataset.breed === tile2.dataset.breed;
+
+            if (isMatch) {
+                handleMatch(tile1, tile2);
+            } else {
+                handleMismatch(tile1, tile2);
+            }
+        }
+
+        function handleMatch(tile1, tile2) {
+            setTimeout(() => {
+                tile1.classList.add('matched');
+                tile2.classList.add('matched');
+                
+                scores[currentPlayer === 1 ? 'p1' : 'p2']++;
+                matchedPairs++;
+                
+                updateScoreboard();
+                flippedTiles = [];
+                isLocked = false;
+
+                // In single player, player continues; in 2-player, current player keeps turn
+                if (gameMode === 'two') {
+                    // Keep same player's turn
+                }
+
+                checkGameEnd();
+            }, 500);
+        }
+
+        function handleMismatch(tile1, tile2) {
+            setTimeout(() => {
+                tile1.classList.remove('flipped');
+                tile2.classList.remove('flipped');
+                
+                flippedTiles = [];
+                isLocked = false;
+
+                // Switch player in 2-player mode
+                if (gameMode === 'two') {
+                    currentPlayer = currentPlayer === 1 ? 2 : 1;
+                    updateScoreboard();
+                }
+            }, 1200);
+        }
+
+        function updateScoreboard() {
+            document.getElementById('p1-score').textContent = scores.p1;
+            document.getElementById('p2-score').textContent = scores.p2;
+
+            const p1Box = document.getElementById('p1-score-box');
+            const p2Box = document.getElementById('p2-score-box');
+            const indicator = document.getElementById('turn-indicator');
+
+            if (gameMode === 'two') {
+                p1Box.classList.toggle('active', currentPlayer === 1);
+                p2Box.classList.toggle('active', currentPlayer === 2);
+                indicator.textContent = `Player ${currentPlayer}'s Turn`;
+            } else {
+                p1Box.classList.remove('active');
+                p2Box.classList.remove('active');
+                indicator.textContent = '';
+            }
+        }
+
+        function checkGameEnd() {
+            if (matchedPairs === 12) {
+                const modal = document.getElementById('winner-modal');
+                const title = document.getElementById('winner-title');
+                const message = document.getElementById('winner-message');
+
+                if (gameMode === 'single') {
+                    title.textContent = '🎉 Congratulations!';
+                    message.textContent = `You matched all pairs in ${scores.p1} moves!`;
+                } else {
+                    if (scores.p1 > scores.p2) {
+                        title.textContent = '🏆 Player 1 Wins!';
+                        message.textContent = `Player 1: ${scores.p1} - Player 2: ${scores.p2}`;
+                    } else if (scores.p2 > scores.p1) {
+                        title.textContent = '🏆 Player 2 Wins!';
+                        message.textContent = `Player 2: ${scores.p2} - Player 1: ${scores.p1}`;
+                    } else {
+                        title.textContent = '🤝 It\'s a Draw!';
+                        message.textContent = `Both players scored ${scores.p1} points!`;
+                    }
+                }
+
+                modal.style.display = 'flex';
+            }
+        }
+
+        function restartGame() {
+            initGame();
+        }
+
+        function showModeScreen() {
+            document.getElementById('game-screen').style.display = 'none';
+            document.getElementById('winner-modal').style.display = 'none';
+            document.getElementById('mode-screen').style.display = 'flex';
+        }
+    </script>
+</body>
+</html>
