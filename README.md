@@ -40,6 +40,27 @@ A fun, browser-based memory matching game featuring the top 12 dog breeds. Match
 
 Works in all modern browsers (Chrome, Firefox, Safari, Edge)
 
+## 🧪 Testing
+
+Run the automated test suite:
+
+```bash
+npm install
+npm test
+```
+
+The test suite verifies:
+- Mode selection screen loads correctly
+- Single player mode starts correctly
+- Game board has 24 tiles in 6x4 grid
+- Tiles can be flipped with animation
+- Cannot click more than 2 tiles at once
+- Match handling works correctly
+- Score updates on match
+- Two player mode switches turns
+- Restart button works
+- Main menu button works
+
 ## License
 
 ISC
