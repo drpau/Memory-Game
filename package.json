@@ -1,0 +1,23 @@
+{
+  "name": "wf-1771753876165",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drpau/Memory-Game.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/drpau/Memory-Game/issues"
+  },
+  "homepage": "https://github.com/drpau/Memory-Game#readme",
+  "devDependencies": {
+    "puppeteer": "^24.37.5"
+  }
+}
