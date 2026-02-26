@@ -176,7 +176,14 @@
         }
 
         /* Name Input Screen */
+        /* Name Input Screen */
         #name-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -656,7 +663,7 @@
     </div>
 
     <!-- Winner Modal -->
-    <div id="winner-modal">
+    <div id="winner-modal" style="display: none;">
         <div class="modal-content">
             <h2 id="winner-title">🎉 Game Over!</h2>
             <p id="winner-message"></p>
