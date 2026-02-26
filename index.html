@@ -23,7 +23,61 @@
 
         body {
             font-family: 'Nunito', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
+    /* Loading Screen */
+    #loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        transition: opacity 0.5s ease;
+    }
+    #loading-screen.hidden {
+        opacity: 0;
+        pointer-events: none;
+    }
+    .loading-dog {
+        font-size: 5rem;
+        animation: bounce 1s infinite;
+    }
+    .loading-text {
+        color: white;
+        font-size: 1.5rem;
+        margin-top: 20px;
+        font-family: 'Fredoka One', cursive;
+    }
+    .loading-bar {
+        width: 200px;
+        height: 6px;
+        background: rgba(255,255,255,0.2);
+        border-radius: 3px;
+        margin-top: 20px;
+        overflow: hidden;
+    }
+    .loading-progress {
+        height: 100%;
+        background: linear-gradient(90deg, #e94560, #0f3460);
+        width: 0%;
+        animation: load 2s ease-in-out forwards;
+    }
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-20px); }
+    }
+    @keyframes load {
+        0% { width: 0%; }
+        100% { width: 100%; }
+    }
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -33,10 +87,89 @@
 
         h1 {
             font-family: 'Fredoka One', cursive;
-            color: var(--dark);
+            color: white; text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
             font-size: 2.5rem;
             margin-bottom: 10px;
             text-shadow: 2px 2px 0 var(--accent);
+        }
+
+        /* Welcome Screen */
+        #welcome-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 80vh;
+            text-align: center;
+        }
+        .welcome-content {
+            animation: fadeInUp 0.6s ease;
+        }
+        .welcome-dog {
+            font-size: 6rem;
+            margin-bottom: 20px;
+            animation: pawWave 2s ease-in-out infinite;
+        }
+        .welcome-tagline {
+            font-size: 1.3rem;
+            color: #666;
+            margin-bottom: 40px;
+        }
+        .start-btn {
+            background: linear-gradient(135deg, var(--primary) 0%, #ff6b6b 100%);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            font-size: 1.4rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Fredoka One', cursive;
+            box-shadow: 0 8px 25px rgba(233, 69, 96, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(233, 69, 96, 0.5);
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pawWave {
+            0%, 100% { transform: rotate(-10deg); }
+            50% { transform: rotate(10deg); }
+        }
+
+        /* Name Input Screen */
+        #name-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 80vh;
+        }
+        .name-inputs-wizard {
+            display: flex;
+            gap: 30px;
+            margin: 30px 0;
+        }
+        .name-inputs-wizard .name-input {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .name-inputs-wizard label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: white; text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+        }
+        .name-inputs-wizard input {
+            padding: 15px 25px;
+            font-size: 1.1rem;
+            border: 3px solid var(--primary);
+            border-radius: 15px;
+            width: 200px;
+            text-align: center;
+        }
         }
 
         /* Mode Selection Screen */
@@ -84,7 +217,7 @@
 
         .name-input-group label {
             font-size: 1.1rem;
-            color: var(--dark);
+            color: white; text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
             font-weight: 600;
         }
 
@@ -108,6 +241,9 @@
 
         .name-input input {
             font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
             font-size: 1rem;
             padding: 10px 15px;
             border: 2px solid #ddd;
@@ -156,7 +292,7 @@
         .score-value {
             font-family: 'Fredoka One', cursive;
             font-size: 2rem;
-            color: var(--dark);
+            color: white; text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
         }
 
         .score-item.active .score-value {
@@ -172,7 +308,7 @@
         .timer-display {
             font-family: 'Fredoka One', cursive;
             font-size: 1.5rem;
-            color: var(--dark);
+            color: white; text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
             background: white;
             padding: 10px 25px;
             border-radius: 15px;
@@ -269,6 +405,9 @@
 
         .btn {
             font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
             font-size: 1rem;
             font-weight: 700;
             padding: 12px 30px;
@@ -286,7 +425,7 @@
 
         .btn-restart {
             background: var(--accent);
-            color: var(--dark);
+            color: white; text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
         }
 
         .btn-menu {
@@ -336,7 +475,7 @@
 
         .modal-content p {
             font-size: 1.2rem;
-            color: var(--dark);
+            color: white; text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
             margin-bottom: 25px;
         }
 
@@ -374,10 +513,43 @@
     </style>
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loading-dog">🐕</div>
+        <div class="loading-text">Loading Dog Breed Match...</div>
+        <div class="loading-bar"><div class="loading-progress"></div></div>
+    </div>
+
+    <!-- Welcome Screen (Wizard Step 1) -->
+    <div id="welcome-screen" style="display: none;">
+        <div class="welcome-content">
+            <div class="welcome-dog">🐾</div>
+            <h1>🐕 Dog Breed Match 🐕</h1>
+            <p class="welcome-tagline">Test your memory with adorable dog breeds!</p>
+            <button class="start-btn" onclick="showNameScreen()">Start Game 🎮</button>
+        </div>
+    </div>
+
+    <!-- Name Input Screen (Wizard Step 2) -->
+    <div id="name-screen" style="display: none;">
+        <h2>👤 Who's Playing?</h2>
+        <div class="name-inputs-wizard">
+            <div class="name-input">
+                <label>Player 1</label>
+                <input type="text" id="wiz-p1-name" placeholder="Enter name" value="Player 1">
+            </div>
+            <div class="name-input" id="wiz-p2-group" style="display: none;">
+                <label>Player 2</label>
+                <input type="text" id="wiz-p2-name" placeholder="Enter name" value="Player 2">
+            </div>
+        </div>
+        <button class="start-btn" onclick="showModeScreen()">Continue ➡️</button>
+    </div>
+
     <h1>🐕 Dog Breed Match 🐕</h1>
 
     <!-- Mode Selection -->
-    <div id="mode-screen">
+    <div id="mode-screen" style="display: none;">
         <h2>Choose Your Mode</h2>
         
         <div class="name-input-group">
@@ -460,6 +632,35 @@
         let secondsElapsed = 0;
         let player1Name = 'Player 1';
         let player2Name = 'Player 2';
+
+        // Wizard flow functions
+        function initWizard() {
+            // Simulate loading
+            setTimeout(() => {
+                document.getElementById('loading-screen').classList.add('hidden');
+                document.getElementById('welcome-screen').style.display = 'flex';
+            }, 2000);
+        }
+        function showNameScreen() {
+            document.getElementById('welcome-screen').style.display = 'none';
+            document.getElementById('name-screen').style.display = 'flex';
+        }
+        function showModeScreenFromWizard() {
+            // Get names from wizard
+            player1Name = document.getElementById('wiz-p1-name').value.trim() || 'Player 1';
+            player2Name = document.getElementById('wiz-p2-name').value.trim() || 'Player 2';
+            document.getElementById('name-screen').style.display = 'none';
+            document.getElementById('mode-screen').style.display = 'flex';
+        }
+        function showModeScreen() {
+            document.getElementById('name-screen').style.display = 'none';
+            document.getElementById('mode-screen').style.display = 'flex';
+        }
+        function showWelcomeScreen() {
+            document.getElementById('mode-screen').style.display = 'none';
+            document.getElementById('game-screen').style.display = 'none';
+            document.getElementById('welcome-screen').style.display = 'flex';
+        }
 
         function shuffle(array) {
             const arr = [...array];
@@ -708,3 +909,4 @@
     </script>
 </body>
 </html>
+<script>window.onload = initWizard;</script>
