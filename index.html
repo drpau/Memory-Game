@@ -197,11 +197,21 @@
 
         /* Mode Selection Screen */
         #mode-screen {
+            background: white;
+            padding: 40px 60px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 30px;
             margin-top: 50px;
+        }
+
+        .mode-buttons {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
         }
 
         .mode-btn {
@@ -588,29 +598,15 @@
     </div>
 
 
-    <!-- Mode Selection -->
+    <!-- Game Screen -->
     <div id="mode-screen" style="display: none;">
-        <h2>Choose Your Mode</h2>
-        
-        <div class="name-input-group">
-            <label>Enter Player Names</label>
-            <div class="name-inputs">
-                <div class="name-input single-player">
-                    <label>Player 1</label>
-                    <input type="text" id="p1-name" placeholder="Your name" value="Player 1">
-                </div>
-                <div class="name-input" id="p2-name-group">
-                    <label>Player 2</label>
-                    <input type="text" id="p2-name" placeholder="Player 2" value="Player 2">
-                </div>
-            </div>
+        <h2>Choose Your Game Mode</h2>
+        <div class="mode-buttons">
+            <button class="mode-btn single" onclick="startGame('single')">👤 Single Player</button>
+            <button class="mode-btn two-player" onclick="startGame('two')">👥 Two Players</button>
         </div>
-
-        <button class="mode-btn single" onclick="startGame('single')">👤 Single Player</button>
-        <button class="mode-btn two-player" onclick="startGame('two')">👥 Two Players</button>
     </div>
 
-    <!-- Game Screen -->
     <div id="game-screen">
         <div class="scoreboard">
             <div class="score-item" id="p1-score-box">
