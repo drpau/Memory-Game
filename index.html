@@ -85,9 +85,27 @@
             padding: 20px;
         }
 
+        .title-image {
+        .start-btn-img {
+            width: 250px;
+            height: 80px;
+            border: none;
+            background: url("images/001-game-button-with-text-start-game-glossy-.png") no-repeat center;
+            background-size: contain;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .start-btn-img:hover {
+            transform: scale(1.05);
+        }
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
         h1 {
             font-family: 'Fredoka One', cursive;
-            color: white; text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+            color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3), 0 0 20px rgba(255,255,255,0.1);
             font-size: 2.5rem;
             margin-bottom: 10px;
             text-shadow: 2px 2px 0 var(--accent);
@@ -160,7 +178,7 @@
         .name-inputs-wizard label {
             font-weight: bold;
             margin-bottom: 8px;
-            color: white; text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+            color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3), 0 0 20px rgba(255,255,255,0.1);
         }
         .name-inputs-wizard input {
             padding: 15px 25px;
@@ -217,7 +235,7 @@
 
         .name-input-group label {
             font-size: 1.1rem;
-            color: white; text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+            color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3), 0 0 20px rgba(255,255,255,0.1);
             font-weight: 600;
         }
 
@@ -292,7 +310,7 @@
         .score-value {
             font-family: 'Fredoka One', cursive;
             font-size: 2rem;
-            color: white; text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+            color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3), 0 0 20px rgba(255,255,255,0.1);
         }
 
         .score-item.active .score-value {
@@ -308,7 +326,7 @@
         .timer-display {
             font-family: 'Fredoka One', cursive;
             font-size: 1.5rem;
-            color: white; text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+            color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3), 0 0 20px rgba(255,255,255,0.1);
             background: white;
             padding: 10px 25px;
             border-radius: 15px;
@@ -425,7 +443,7 @@
 
         .btn-restart {
             background: var(--accent);
-            color: white; text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+            color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3), 0 0 20px rgba(255,255,255,0.1);
         }
 
         .btn-menu {
@@ -475,7 +493,7 @@
 
         .modal-content p {
             font-size: 1.2rem;
-            color: white; text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+            color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3), 0 0 20px rgba(255,255,255,0.1);
             margin-bottom: 25px;
         }
 
@@ -493,6 +511,24 @@
                 gap: 8px;
             }
             
+        .title-image {
+        .start-btn-img {
+            width: 250px;
+            height: 80px;
+            border: none;
+            background: url("images/001-game-button-with-text-start-game-glossy-.png") no-repeat center;
+            background-size: contain;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .start-btn-img:hover {
+            transform: scale(1.05);
+        }
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
             h1 {
                 font-size: 1.8rem;
             }
@@ -524,9 +560,9 @@
     <div id="welcome-screen" style="display: none;">
         <div class="welcome-content">
             <div class="welcome-dog">🐾</div>
-            <h1>🐕 Dog Breed Match 🐕</h1>
+            <img src="images/001-elegant-game-title-dog-breed-match-in-bo.png" alt="Dog Breed Match" class="title-image">
             <p class="welcome-tagline">Test your memory with adorable dog breeds!</p>
-            <button class="start-btn" onclick="showNameScreen()">Start Game 🎮</button>
+            <button class="start-btn-img" onclick="showNameScreen()"></button>
         </div>
     </div>
 
@@ -546,7 +582,6 @@
         <button class="start-btn" onclick="showModeScreen()">Continue ➡️</button>
     </div>
 
-    <h1>🐕 Dog Breed Match 🐕</h1>
 
     <!-- Mode Selection -->
     <div id="mode-screen" style="display: none;">
