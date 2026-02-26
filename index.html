@@ -67,7 +67,7 @@
         height: 100%;
         background: linear-gradient(90deg, #e94560, #0f3460);
         width: 0%;
-        animation: load 2s ease-in-out forwards;
+        animation: load 1.5s ease-in-out forwards;
     }
     @keyframes bounce {
         0%, 100% { transform: translateY(0); }
@@ -86,15 +86,24 @@
         }
 
         .title-image {
+            display: block;
+            width: 350px;
+            max-width: 90vw;
+            margin: 0 auto 30px;
+        }
         .start-btn-img {
             width: 250px;
             height: 80px;
             border: none;
             background: url("images/001-game-button-with-text-start-game-glossy-.png") no-repeat center;
             background-size: contain;
-            cursor: pointer;
+            cursor: pointer; text-align: center; line-height: 80px;
             transition: transform 0.2s;
         }
+        .start-btn-img {
+            color: white; font-size: 1.2rem; font-weight: bold; display: flex; align-items: center; justify-content: center; font-family: Arial, sans-serif;
+        }
+
         .start-btn-img:hover {
             transform: scale(1.05);
         }
@@ -117,7 +126,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 80vh;
+            min-height: 100vh;
             text-align: center;
         }
         .welcome-content {
@@ -140,7 +149,7 @@
             padding: 18px 50px;
             font-size: 1.4rem;
             border-radius: 50px;
-            cursor: pointer;
+            cursor: pointer; text-align: center; line-height: 80px;
             font-family: 'Fredoka One', cursive;
             box-shadow: 0 8px 25px rgba(233, 69, 96, 0.4);
             transition: transform 0.2s, box-shadow 0.2s;
@@ -163,7 +172,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 80vh;
+            min-height: 100vh;
             padding: 40px;
             background: white;
             border-radius: 20px;
@@ -220,7 +229,7 @@
             padding: 20px 50px;
             border: none;
             border-radius: 20px;
-            cursor: pointer;
+            cursor: pointer; text-align: center; line-height: 80px;
             transition: transform 0.2s, box-shadow 0.2s;
             margin: 6px;
             color: white;
@@ -296,7 +305,7 @@
 
         /* Game Screen */
         #game-screen {
-            display: none;
+            color: white; font-size: 1.2rem; font-weight: bold; display: flex; align-items: center; justify-content: center; font-family: Arial, sans-serif;
             flex-direction: column;
             align-items: center;
             gap: 20px;
@@ -369,7 +378,7 @@
         .game-board .tile {
             aspect-ratio: 1;
             perspective: 1000px;
-            cursor: pointer;
+            cursor: pointer; text-align: center; line-height: 80px;
             transform: none;
             transform-origin: center center;
             width: 110px; height: 110px;
@@ -446,7 +455,7 @@
             padding: 12px 30px;
             border: none;
             border-radius: 12px;
-            cursor: pointer;
+            cursor: pointer; text-align: center; line-height: 80px;
             transition: transform 0.2s, box-shadow 0.2s;
             margin: 6px;
         }
@@ -468,7 +477,7 @@
 
         /* Winner Modal */
         #winner-modal {
-            display: none;
+            color: white; font-size: 1.2rem; font-weight: bold; display: flex; align-items: center; justify-content: center; font-family: Arial, sans-serif;
             position: fixed;
             top: 0;
             left: 0;
@@ -527,15 +536,24 @@
             }
             
         .title-image {
+            display: block;
+            width: 350px;
+            max-width: 90vw;
+            margin: 0 auto 30px;
+        }
         .start-btn-img {
             width: 250px;
             height: 80px;
             border: none;
             background: url("images/001-game-button-with-text-start-game-glossy-.png") no-repeat center;
             background-size: contain;
-            cursor: pointer;
+            cursor: pointer; text-align: center; line-height: 80px;
             transition: transform 0.2s;
         }
+        .start-btn-img {
+            color: white; font-size: 1.2rem; font-weight: bold; display: flex; align-items: center; justify-content: center; font-family: Arial, sans-serif;
+        }
+
         .start-btn-img:hover {
             transform: scale(1.05);
         }
@@ -577,7 +595,7 @@
             <div class="welcome-dog">🐾</div>
             <img src="images/001-elegant-game-title-dog-breed-match-in-bo.png" alt="Dog Breed Match" class="title-image">
             <p class="welcome-tagline">Test your memory with adorable dog breeds!</p>
-            <button class="start-btn-img" onclick="showNameScreen()"></button>
+            <button class="start-btn-img" onclick="showNameScreen()">START GAME</button>
         </div>
     </div>
 
