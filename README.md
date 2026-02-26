@@ -5,21 +5,27 @@ A fun, browser-based memory matching game featuring the top 12 dog breeds. Match
 ## 🎮 Game Features
 
 - **24 tiles** arranged in a 6×4 grid
-- **12 matching pairs** of dog breed caricatures
+- **12 matching pairs** of dog breed images
 - **Two game modes**: Single Player & Two Player
+- **Custom player names** - enter your name before playing
+- **Game timer** - tracks how long each game takes
 - **Animated tile flips** with smooth 3D effects
 - **Score tracking** with turn indicators for multiplayer
 - **Responsive design** - works on desktop and mobile
+- **Single player mode** hides player 2 for a cleaner UI
 
 ## 🚀 How to Play
 
 1. Open `index.html` in any modern web browser
-2. Choose your game mode (Single Player or Two Players)
-3. Click tiles to flip them and reveal the dog breed
-4. Match pairs to earn points:
+2. Enter your name(s) in the player name fields
+3. Choose your game mode (Single Player or Two Players)
+4. Click tiles to flip them and reveal the dog breed image
+5. Match pairs to earn points:
    - **Match**: Tiles are removed, player earns 1 point, and takes another turn
    - **No Match**: Tiles flip back after 1.2 seconds, turn passes to next player
-5. Win by matching all 12 pairs!
+6. Try to match all 12 pairs in the fastest time possible!
+7. In Single Player mode, compete against the clock
+8. In Two Player mode, take turns with your opponent
 
 ## 🛠️ Technical Details
 
