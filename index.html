@@ -139,6 +139,7 @@
             padding: 15px 40px;
             border-radius: 20px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            align-items: center;
         }
 
         .score-item {
@@ -399,6 +400,7 @@
                 <div class="score-label" id="p1-label">Player 1</div>
                 <div class="score-value" id="p1-score">0</div>
             </div>
+            <div class="timer-display" id="timer">00:00</div>
             <div class="score-item" id="p2-score-box">
                 <div class="score-label" id="p2-label">Player 2</div>
                 <div class="score-value" id="p2-score">0</div>
@@ -549,7 +551,7 @@
             const board = document.getElementById('game-board');
             board.innerHTML = '';
 
-            // Create pairs
+            // Create pairs - each image appears twice
             const tiles = [...dogBreeds, ...dogBreeds];
             const shuffled = shuffle(tiles);
 

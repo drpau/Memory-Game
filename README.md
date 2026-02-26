@@ -57,6 +57,7 @@ npm test
 
 The test suite verifies:
 - Mode selection screen loads correctly
+- Player name input fields work
 - Single player mode starts correctly
 - Game board has 24 tiles in 6x4 grid
 - Tiles can be flipped with animation
@@ -64,6 +65,7 @@ The test suite verifies:
 - Match handling works correctly
 - Score updates on match
 - Two player mode switches turns
+- Timer counts up during gameplay
 - Restart button works
 - Main menu button works
 
