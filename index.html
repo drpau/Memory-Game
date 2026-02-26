@@ -97,7 +97,7 @@
             border: none;
             background: url("images/001-game-button-with-text-start-game-glossy-.png") no-repeat center;
             background-size: contain;
-            cursor: pointer; text-align: center; line-height: 80px;
+            cursor: pointer;
             transition: transform 0.2s;
         }
         .start-btn-img {
@@ -132,6 +132,14 @@
         .welcome-content {
             animation: fadeInUp 0.6s ease;
         }
+        .game-title {
+            font-family: 'Fredoka One', cursive;
+            font-size: 3.5rem;
+            color: #4a4a6a;
+            text-shadow: 2px 2px 0 #fff, 4px 4px 10px rgba(0,0,0,0.15);
+            margin-bottom: 10px;
+        }
+
         .welcome-dog {
             font-size: 6rem;
             margin-bottom: 20px;
@@ -149,7 +157,7 @@
             padding: 18px 50px;
             font-size: 1.4rem;
             border-radius: 50px;
-            cursor: pointer; text-align: center; line-height: 80px;
+            cursor: pointer;
             font-family: 'Fredoka One', cursive;
             box-shadow: 0 8px 25px rgba(233, 69, 96, 0.4);
             transition: transform 0.2s, box-shadow 0.2s;
@@ -229,7 +237,7 @@
             padding: 20px 50px;
             border: none;
             border-radius: 20px;
-            cursor: pointer; text-align: center; line-height: 80px;
+            cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
             margin: 6px;
             color: white;
@@ -378,7 +386,7 @@
         .game-board .tile {
             aspect-ratio: 1;
             perspective: 1000px;
-            cursor: pointer; text-align: center; line-height: 80px;
+            cursor: pointer;
             transform: none;
             transform-origin: center center;
             width: 110px; height: 110px;
@@ -455,7 +463,7 @@
             padding: 12px 30px;
             border: none;
             border-radius: 12px;
-            cursor: pointer; text-align: center; line-height: 80px;
+            cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
             margin: 6px;
         }
@@ -547,7 +555,7 @@
             border: none;
             background: url("images/001-game-button-with-text-start-game-glossy-.png") no-repeat center;
             background-size: contain;
-            cursor: pointer; text-align: center; line-height: 80px;
+            cursor: pointer;
             transition: transform 0.2s;
         }
         .start-btn-img {
@@ -593,9 +601,9 @@
     <div id="welcome-screen" style="display: none;">
         <div class="welcome-content">
             <div class="welcome-dog">🐾</div>
-            <img src="images/001-elegant-game-title-dog-breed-match-in-bo.png" alt="Dog Breed Match" class="title-image">
+            <h1 class="game-title">Dog Breed Match</h1>
             <p class="welcome-tagline">Test your memory with adorable dog breeds!</p>
-            <button class="start-btn-img" onclick="showNameScreen()">START GAME</button>
+            <button class="start-btn" onclick="showNameScreen()">START GAME</button>
         </div>
     </div>
 
