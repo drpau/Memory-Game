@@ -73,6 +73,57 @@
             background: linear-gradient(135deg, var(--secondary) 0%, #3dbdb5 100%);
         }
 
+        .name-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .name-input-group label {
+            font-size: 1.1rem;
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        .name-inputs {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .name-input {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .name-input label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .name-input input {
+            font-family: 'Nunito', sans-serif;
+            font-size: 1rem;
+            padding: 10px 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            width: 180px;
+            transition: border-color 0.2s;
+        }
+
+        .name-input input:focus {
+            outline: none;
+            border-color: var(--secondary);
+        }
+
+        .name-input.single-player input {
+            border-color: var(--primary);
+        }
+
         /* Game Screen */
         #game-screen {
             display: none;
@@ -88,6 +139,7 @@
             padding: 15px 40px;
             border-radius: 20px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            align-items: center;
         }
 
         .score-item {
@@ -114,6 +166,26 @@
             font-weight: 700;
             color: var(--secondary);
             font-size: 1.1rem;
+        }
+
+        .timer-display {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.5rem;
+            color: var(--dark);
+            background: white;
+            padding: 10px 25px;
+            border-radius: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .timer-display.urgent {
+            color: var(--primary);
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
         .game-board {
@@ -176,11 +248,12 @@
             background: white;
             transform: rotateY(180deg);
             border: 3px solid var(--secondary);
+            padding: 5px;
         }
 
         .tile-back img {
-            width: 80%;
-            height: 80%;
+            width: 100%;
+            height: 100%;
             object-fit: contain;
         }
 
@@ -262,6 +335,13 @@
             margin-bottom: 25px;
         }
 
+        .modal-time {
+            font-size: 1rem;
+            color: #666;
+            margin-top: -10px;
+            margin-bottom: 20px;
+        }
+
         /* Responsive */
         @media (max-width: 600px) {
             .game-board {
@@ -276,6 +356,15 @@
             .tile-face {
                 font-size: 1.8rem;
             }
+
+            .name-inputs {
+                flex-direction: column;
+            }
+
+            .scoreboard {
+                gap: 20px;
+                padding: 15px 25px;
+            }
         }
     </style>
 </head>
@@ -285,6 +374,21 @@
     <!-- Mode Selection -->
     <div id="mode-screen">
         <h2>Choose Your Mode</h2>
+        
+        <div class="name-input-group">
+            <label>Enter Player Names</label>
+            <div class="name-inputs">
+                <div class="name-input single-player">
+                    <label>Player 1</label>
+                    <input type="text" id="p1-name" placeholder="Your name" value="Player 1">
+                </div>
+                <div class="name-input" id="p2-name-group">
+                    <label>Player 2</label>
+                    <input type="text" id="p2-name" placeholder="Player 2" value="Player 2">
+                </div>
+            </div>
+        </div>
+
         <button class="mode-btn single" onclick="startGame('single')">👤 Single Player</button>
         <button class="mode-btn two-player" onclick="startGame('two')">👥 Two Players</button>
     </div>
@@ -293,11 +397,12 @@
     <div id="game-screen">
         <div class="scoreboard">
             <div class="score-item" id="p1-score-box">
-                <div class="score-label">Player 1</div>
+                <div class="score-label" id="p1-label">Player 1</div>
                 <div class="score-value" id="p1-score">0</div>
             </div>
+            <div class="timer-display" id="timer">00:00</div>
             <div class="score-item" id="p2-score-box">
-                <div class="score-label">Player 2</div>
+                <div class="score-label" id="p2-label">Player 2</div>
                 <div class="score-value" id="p2-score">0</div>
             </div>
         </div>
@@ -316,25 +421,26 @@
         <div class="modal-content">
             <h2 id="winner-title">🎉 Game Over!</h2>
             <p id="winner-message"></p>
+            <p class="modal-time" id="game-time"></p>
             <button class="mode-btn single" onclick="showModeScreen()">Play Again</button>
         </div>
     </div>
 
     <script>
-        // Dog breed data with emoji caricatures
+        // Dog breed data with images
         const dogBreeds = [
-            { name: 'Labrador', emoji: '🦮' },
-            { name: 'German Shepherd', emoji: '🐕‍🦺' },
-            { name: 'Golden Retriever', emoji: '🦃' },
-            { name: 'French Bulldog', emoji: '🐕' },
-            { name: 'Bulldog', emoji: '🐶' },
-            { name: 'Poodle', emoji: '🎀' },
-            { name: 'Beagle', emoji: '👃' },
-            { name: 'Rottweiler', emoji: '⚫' },
-            { name: 'Yorkshire Terrier', emoji: '🧶' },
-            { name: 'Boxer', emoji: '🥊' },
-            { name: 'Dachshund', emoji: '🌭' },
-            { name: 'Siberian Husky', emoji: '❄️' }
+            { name: 'Labrador', image: 'images/001-tile-card-image-of-a-labrador-retriever-.png' },
+            { name: 'German Shepherd', image: 'images/001-tile-card-image-of-a-german-shepherd-dog.png' },
+            { name: 'Golden Retriever', image: 'images/001-tile-card-image-of-a-golden-retriever-do.png' },
+            { name: 'French Bulldog', image: 'images/001-tile-card-image-of-a-french-bulldog-dog-.png' },
+            { name: 'Bulldog', image: 'images/001-tile-card-image-of-a-bulldog-dog-centere.png' },
+            { name: 'Poodle', image: 'images/001-tile-card-image-of-a-poodle-dog-centered.png' },
+            { name: 'Beagle', image: 'images/001-tile-card-image-of-a-beagle-dog-centered.png' },
+            { name: 'Rottweiler', image: 'images/001-tile-card-image-of-a-rottweiler-dog-cent.png' },
+            { name: 'Yorkshire Terrier', image: 'images/001-tile-card-image-of-a-yorkshire-terrier-d.png' },
+            { name: 'Boxer', image: 'images/001-tile-card-image-of-a-boxer-dog-centered-.png' },
+            { name: 'Dachshund', image: 'images/001-tile-card-image-of-a-dachshund-dog-cente.png' },
+            { name: 'Siberian Husky', image: 'images/001-tile-card-image-of-a-siberian-husky-dog-.png' }
         ];
 
         let gameMode = 'single';
@@ -343,6 +449,12 @@
         let flippedTiles = [];
         let matchedPairs = 0;
         let isLocked = false;
+        
+        // Timer variables
+        let timerInterval = null;
+        let secondsElapsed = 0;
+        let player1Name = 'Player 1';
+        let player2Name = 'Player 2';
 
         function shuffle(array) {
             const arr = [...array];
@@ -354,10 +466,28 @@
         }
 
         function startGame(mode) {
+            // Get player names
+            player1Name = document.getElementById('p1-name').value.trim() || 'Player 1';
+            player2Name = document.getElementById('p2-name').value.trim() || 'Player 2';
+            
             gameMode = mode;
             document.getElementById('mode-screen').style.display = 'none';
             document.getElementById('game-screen').style.display = 'flex';
             document.getElementById('winner-modal').style.display = 'none';
+            
+            // Show/hide player 2 based on mode
+            const p2Box = document.getElementById('p2-score-box');
+            const p2Label = document.getElementById('p2-label');
+            if (mode === 'single') {
+                p2Box.style.display = 'none';
+                p2Label.textContent = player2Name;
+            } else {
+                p2Box.style.display = 'block';
+                p2Label.textContent = player2Name;
+            }
+            
+            // Show player 1 name in label
+            document.getElementById('p1-label').textContent = player1Name;
             
             initGame();
         }
@@ -369,15 +499,58 @@
             matchedPairs = 0;
             isLocked = false;
 
+            // Reset and start timer
+            stopTimer();
+            secondsElapsed = 0;
+            updateTimerDisplay();
+            startTimer();
+
             updateScoreboard();
             createBoard();
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                secondsElapsed++;
+                updateTimerDisplay();
+            }, 1000);
+        }
+
+        function stopTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(secondsElapsed / 60);
+            const seconds = secondsElapsed % 60;
+            const timerEl = document.getElementById('timer');
+            timerEl.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            // Add urgent styling after 2 minutes
+            if (secondsElapsed >= 120) {
+                timerEl.classList.add('urgent');
+            } else {
+                timerEl.classList.remove('urgent');
+            }
+        }
+
+        function formatTime() {
+            const minutes = Math.floor(secondsElapsed / 60);
+            const seconds = secondsElapsed % 60;
+            if (minutes === 0) {
+                return `${seconds} seconds`;
+            }
+            return `${minutes} minute${minutes > 1 ? 's' : ''} and ${seconds} second${seconds !== 1 ? 's' : ''}`;
         }
 
         function createBoard() {
             const board = document.getElementById('game-board');
             board.innerHTML = '';
 
-            // Create pairs
+            // Create pairs - each image appears twice
             const tiles = [...dogBreeds, ...dogBreeds];
             const shuffled = shuffle(tiles);
 
@@ -391,7 +564,9 @@
                 tile.innerHTML = `
                     <div class="tile-inner">
                         <div class="tile-face tile-front"></div>
-                        <div class="tile-face tile-back">${breed.emoji}</div>
+                        <div class="tile-face tile-back">
+                            <img src="${breed.image}" alt="${breed.name}">
+                        </div>
                     </div>
                 `;
 
@@ -439,11 +614,6 @@
                 flippedTiles = [];
                 isLocked = false;
 
-                // In single player, player continues; in 2-player, current player keeps turn
-                if (gameMode === 'two') {
-                    // Keep same player's turn
-                }
-
                 checkGameEnd();
             }, 500);
         }
@@ -475,7 +645,8 @@
             if (gameMode === 'two') {
                 p1Box.classList.toggle('active', currentPlayer === 1);
                 p2Box.classList.toggle('active', currentPlayer === 2);
-                indicator.textContent = `Player ${currentPlayer}'s Turn`;
+                const currentName = currentPlayer === 1 ? player1Name : player2Name;
+                indicator.textContent = `${currentName}'s Turn`;
             } else {
                 p1Box.classList.remove('active');
                 p2Box.classList.remove('active');
@@ -485,26 +656,32 @@
 
         function checkGameEnd() {
             if (matchedPairs === 12) {
+                stopTimer();
+                
                 const modal = document.getElementById('winner-modal');
                 const title = document.getElementById('winner-title');
                 const message = document.getElementById('winner-message');
+                const timeEl = document.getElementById('game-time');
+
+                const timeStr = formatTime();
 
                 if (gameMode === 'single') {
                     title.textContent = '🎉 Congratulations!';
                     message.textContent = `You matched all pairs in ${scores.p1} moves!`;
                 } else {
                     if (scores.p1 > scores.p2) {
-                        title.textContent = '🏆 Player 1 Wins!';
-                        message.textContent = `Player 1: ${scores.p1} - Player 2: ${scores.p2}`;
+                        title.textContent = `🏆 ${player1Name} Wins!`;
+                        message.textContent = `${player1Name}: ${scores.p1} - ${player2Name}: ${scores.p2}`;
                     } else if (scores.p2 > scores.p1) {
-                        title.textContent = '🏆 Player 2 Wins!';
-                        message.textContent = `Player 2: ${scores.p2} - Player 1: ${scores.p1}`;
+                        title.textContent = `🏆 ${player2Name} Wins!`;
+                        message.textContent = `${player2Name}: ${scores.p2} - ${player1Name}: ${scores.p1}`;
                     } else {
                         title.textContent = '🤝 It\'s a Draw!';
                         message.textContent = `Both players scored ${scores.p1} points!`;
                     }
                 }
 
+                timeEl.textContent = `Game time: ${timeStr}`;
                 modal.style.display = 'flex';
             }
         }
@@ -514,9 +691,14 @@
         }
 
         function showModeScreen() {
+            stopTimer();
             document.getElementById('game-screen').style.display = 'none';
             document.getElementById('winner-modal').style.display = 'none';
             document.getElementById('mode-screen').style.display = 'flex';
+            
+            // Reset timer display
+            document.getElementById('timer').textContent = '00:00';
+            document.getElementById('timer').classList.remove('urgent');
         }
     </script>
 </body>
