@@ -1,7 +1,7 @@
 {
-  "name": "wf-1771753876165",
+  "name": "dog-breed-match",
   "version": "1.0.0",
-  "description": "",
+  "description": "A fun memory matching game with dog breeds",
   "main": "index.js",
   "scripts": {
     "test": "node test.js"
