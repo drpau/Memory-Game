@@ -483,7 +483,7 @@
             <div class="welcome-dog">🐾</div>
             <h1 class="welcome-title">Dog Breed Match</h1>
             <p class="welcome-tagline">Test your memory with adorable dog breeds!</p>
-            <button class="btn btn-primary btn-large" onclick="showNameScreen()">Start Game</button>
+            <button class="btn btn-primary btn-large" onclick="showModeScreen()">Start Game</button>
         </div>
     </div>
 
@@ -500,15 +500,15 @@
                 <input type="text" id="p2-name" placeholder="Enter name" value="Player 2">
             </div>
         </div>
-        <button class="btn btn-primary" onclick="showModeScreen()">Continue</button>
+        <button class="btn btn-primary" onclick="startGameFromNames()">Continue</button>
     </div>
 
     <!-- Mode Selection Screen -->
     <div id="mode-screen" class="screen">
         <h2 class="mode-title">Choose Your Mode</h2>
         <div class="mode-buttons">
-            <button class="mode-btn single" onclick="startGame('single')">Single Player</button>
-            <button class="mode-btn two" onclick="startGame('two')">Two Players</button>
+            <button class="mode-btn single" onclick="selectMode('single')">Single Player</button>
+            <button class="mode-btn two" onclick="selectMode('two')">Two Players</button>
         </div>
     </div>
 
@@ -563,6 +563,7 @@
         ];
 
         let gameMode = 'single';
+        let selectedMode = null;
         let scores = { p1: 0, p2: 0 };
         let currentPlayer = 1;
         let flippedTiles = [];
@@ -596,23 +597,46 @@
         }
 
         function showNameScreen() {
-            showScreen('name-screen');
+            showScreen('mode-screen');
         }
 
         function showModeScreen() {
-            player1Name = document.getElementById('p1-name').value.trim() || 'Player 1';
-            player2Name = document.getElementById('p2-name').value.trim() || 'Player 2';
-            
-            if (gameMode === 'two') {
-                document.getElementById('p2-input').style.display = 'flex';
-            }
             showScreen('mode-screen');
         }
+
 
         function showWelcomeScreen() {
             document.getElementById('winner-modal').classList.remove('active');
             stopTimer();
             showScreen('welcome-screen');
+        }
+
+        function selectMode(mode) {
+            selectedMode = mode;
+            
+            // Show/hide player 2 name input based on mode
+            const p2Input = document.getElementById('p2-input');
+            if (mode === 'single') {
+                p2Input.style.display = 'none';
+            } else {
+                p2Input.style.display = 'flex';
+            }
+            
+            showScreen('mode-screen');
+        }
+
+        function startGameFromNames() {
+            player1Name = document.getElementById('p1-name').value.trim() || 'Player 1';
+            player2Name = document.getElementById('p2-name').value.trim() || 'Player 2';
+            
+            const p2Input = document.getElementById('p2-input');
+            if (selectedMode === 'single') {
+                p2Input.style.display = 'none';
+            } else {
+                p2Input.style.display = 'flex';
+            }
+            
+            startGame(selectedMode);
         }
 
         function startGame(mode) {
