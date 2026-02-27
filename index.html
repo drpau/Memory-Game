@@ -280,6 +280,9 @@
         }
 
         .score-item {
+        transition: transform 0.2s, box-shadow 0.2s;
+        border-radius: 12px;
+        padding: 10px 20px;
             text-align: center;
             padding: 10px 20px;
             background: white;
@@ -292,6 +295,11 @@
             font-weight: 700;
             font-size: 0.9rem;
             color: #666;
+        }
+
+        .score-item.active {
+            box-shadow: 0 0 0 3px var(--primary), 0 5px 15px rgba(233, 69, 96, 0.4);
+            transform: scale(1.05);
         }
 
         .score-value {
@@ -797,6 +805,19 @@
         function updateScoreboard() {
             document.getElementById('p1-score').textContent = scores.p1;
             document.getElementById('p2-score').textContent = scores.p2;
+
+            // Update turn indicator for two-player mode
+            if (gameMode === 'two') {
+                const p1Box = document.getElementById('p1-score-box');
+                const p2Box = document.getElementById('p2-score-box');
+                if (currentPlayer === 1) {
+                    p1Box.classList.add('active');
+                    p2Box.classList.remove('active');
+                } else {
+                    p2Box.classList.add('active');
+                    p1Box.classList.remove('active');
+                }
+            }
         }
 
         function checkGameEnd() {
