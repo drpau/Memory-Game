@@ -495,7 +495,7 @@
                 <label>Player 1</label>
                 <input type="text" id="p1-name" placeholder="Enter name" value="Player 1">
             </div>
-            <div class="name-input" id="p2-input" style="display: none;">
+            <div class="name-input" id="p2-input">
                 <label>Player 2</label>
                 <input type="text" id="p2-name" placeholder="Enter name" value="Player 2">
             </div>
@@ -610,6 +610,7 @@
         }
 
         function showWelcomeScreen() {
+            document.getElementById('winner-modal').classList.remove('active');
             stopTimer();
             showScreen('welcome-screen');
         }
@@ -618,14 +619,11 @@
             gameMode = mode;
             
             const p2Box = document.getElementById('p2-score-box');
-            const p2Input = document.getElementById('p2-input');
             
             if (mode === 'single') {
                 p2Box.style.display = 'none';
-                p2Input.style.display = 'none';
             } else {
                 p2Box.style.display = 'block';
-                p2Input.style.display = 'flex';
             }
             
             document.getElementById('p1-label').textContent = player1Name;
