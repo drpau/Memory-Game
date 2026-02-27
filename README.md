@@ -1,14 +1,8 @@
 # 🐕 Dog Breed Match - Memory Game
 
-<p align="center">
-  <img src="assets/title.png" alt="Dog Breed Match" width="400">
-</p>
 
 A fun, browser-based memory matching game featuring the top 12 dog breeds. Match all pairs to win!
 
-<p align="center">
-  <img src="assets/screenshot-game.png" alt="Game Screenshot" width="600">
-</p>
 
 ## 🎮 Game Features
 
@@ -36,15 +30,9 @@ A fun, browser-based memory matching game featuring the top 12 dog breeds. Match
 
 ## 📸 Screenshots
 
-<p align="center">
-  <img src="assets/screenshot-welcome.png" alt="Welcome Screen" width="400">
-  <img src="assets/screenshot-names.png" alt="Name Input" width="400">
-</p>
+*Screenshots coming soon - run the game to see it in action!*
 
-<p align="center">
-  <img src="assets/screenshot-mode.png" alt="Mode Selection" width="400">
-  <img src="assets/screenshot-game.png" alt="Game Board" width="400">
-</p>
+
 
 ## 🛠️ Installation
 
